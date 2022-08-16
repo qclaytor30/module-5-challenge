@@ -8,7 +8,7 @@ currentDateEl.text(currentDate);
 var descriptionEls = $('.description');
 var currentHour = parseInt(currentTime.format('H'));
 
-for (var i = 0; i < descriptionEl.length; i++) {
+for (var i = 0; i < descriptionEl.length; i++){
     var descriptionEl = descriptionEls[i];
     var rowHour = parseInt(descriptionEl.dataset.hour);
     //console.log(rowHour);
@@ -26,5 +26,11 @@ else if (rowHour > currentHour) {
 };
     }
 
+var saveButton = $('.saveBtn');
 
+function saveEvents() {}
+saveButton.on('click', saveEvents());
 
+function showSavedEvents(){}
+
+window.on('load', showSavedEvents());
