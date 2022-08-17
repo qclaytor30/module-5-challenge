@@ -1,15 +1,13 @@
 
 var currentTime = moment();
-// Display current date at top
+var currentHour = parseInt(currentTime.format('H'));
+// Display current date at top of page
 var currentDayEl = $('#currentDay');
 var currentDay = currentTime.format('dddd, MMMM Do');
 currentDayEl.text(currentDay);
 
 // Set color of timeslot based on current time
 var descriptionEls = $('.description');
-    // var currentHour = parseInt(currentTime.format('H'));
-
-var currentHour = 13;
 
 for (var i = 0; i < descriptionEls.length; i++) {
     var descriptionEl = descriptionEls[i];
@@ -36,14 +34,28 @@ function saveEvent(event) {
         localStorage.setItem(eventID, JSON.stringify(eventDescription));
 
         var messageEl = $('#message');
-        messageEl.text('Appointment added to local storage ✓');
+        messageEl.text('Task saved to local storage.');
     }
         var saveButtons = $('.fas');
         saveButtons.on('click', saveEvent);
     
-
     // check local storage for events when page loads
     function showSavedEvents() {
+        for (var i = 0; i < descriptionEls.length; i++) {
+            var descriptionEl = descriptionEls[i];
+            var descriptionID = descriptionEl.id;
+            var savedDescription = JSON.parse(localStorage.getItem(descriptionID));
+            if (savedDescription !==null){
+                descriptionEl.textContent = savedDescription;
+            }
+        }
     }
 
     window.onload = showSavedEvents(); 
+// at the end of day clear local storage to start new
+    function clearLocalStorage() {
+        if (currentHour >= 18 || currentHour < 9) {
+            localStorage.clear();
+        }
+    }
+    clearLocalStorage();
